@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>영화 목록</h1>
+    <!-- ol이 for문 안에 있으면 ol도 계속 반복되서 1번만 나옴 -->
+    <ol>
+    {%for i in movies%}
+        <li>{{i}}</li>
+    {%endfor%}
+    </ol>
+</body>
+</html>

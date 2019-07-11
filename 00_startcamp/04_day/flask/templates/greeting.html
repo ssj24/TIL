@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+     <!--ctrl + / 하면 주석  -->
+    <!--jinja2-->
+    <!-- {{html_name}}  -->
+    <!-- jinja2  주석 {##} -->
+    <!-- 준호라는 이름으로 값이 오면 인사하고 아니면 누구세요라고 물어보기 -->
+    {%if html_name == '준호'%}
+        {{html_name}} 왔니?
+    {%else%}
+        누구세요?
+    {%endif%}
+</body>
+</html>
