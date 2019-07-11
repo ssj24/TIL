@@ -112,6 +112,6 @@ def recomm():
     # whatsup = request.args.get('bev_')
     # return render_template('vonvon.html', whatsup=whatsup, recomme1=recomme1, recomme2=recomme2, recomme3=recomme3)
     person = ['체력', '건강', '피곤', '힘듦', '졸림' , '활기']
-        choice = random.sample(person,3)
-        name = request.args.get('data')
-        return render_template('receive.html',choice=choice, name = name)
+    choice = random.sample(person,3)
+    name = request.args.get('data')
+    return render_template('receive.html',choice=choice, name = name)

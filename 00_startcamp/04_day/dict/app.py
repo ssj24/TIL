@@ -7,18 +7,19 @@ app = Flask(__name__)
 def lotto_check():
     return render_template('lotto_check.html')
 
+
 @app.route('/lotto_result')
 def lotto_result():
     #회차 번호를 받아온다.
     num = request.args.get('num')
     #동행복권에 요청을 보내 응답을 받는다.
-    res = request.get(f'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={num}')
+    res = requests.get(f'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={num}')
     lotto = res.json()#chrome의 json viewer같은.. json은 내장함수로 json형태로 바꿔주는 것
 
     #당첨번호 6개만 가져오기
     winner = []
     for i in range(1, 7):
-        winner.appent(lotto[f'drwtNo{i}'])
+        winner.append(lotto[f'drwtNo{i}'])
 
     #내 번호 리스트 만들기
     numbers=[]
