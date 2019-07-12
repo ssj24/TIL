@@ -13,7 +13,7 @@ def lotto_result():
     #회차 번호를 받아온다.
     num = request.args.get('num')
     #동행복권에 요청을 보내 응답을 받는다.
-    res = requests.get(f'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={num}')
+    res = requests.get(f'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={num}')#원래 common.do앞에 token값을 넣어야 반환해주는데 동행복권은 착하넹
     lotto = res.json()#chrome의 json viewer같은.. json은 내장함수로 json형태로 바꿔주는 것
 
     #당첨번호 6개만 가져오기
@@ -30,17 +30,23 @@ def lotto_result():
     for num in numbers:
         if num in winner:#num이 winner에 있는지 판단하는 것
             matched += 1
-    if matched == 6:
-        result = '1등입니다!'
-    elif matched == 5:
-        if lotto['bnusNo'] in num:
-            result = '2등입니다!'
+
+#개쩌는 코드. 이게 29~32라인을 한 줄로 쓰는 것.
+# matched = len(set(winner)&set(numbers))
+    if len(numbers) == 6:
+        if matched == 6:
+            result = '1등입니다!'
+        elif matched == 5:
+            if lotto['bnusNo'] in num:#보너스 번호가 내 로또번호 리스트에 존재하면
+                result = '2등입니다!'
+            else:
+                result = '3등입니다!'
+        elif matched == 4:
+            result = '4등입니다!'
+        elif matched == 3:
+            result = '5등입니다!'
         else:
-            result = '3등입니다!'
-    elif matched == 4:
-        result = '4등입니다!'
-    elif matched == 3:
-        result = '5등입니다!'
+            result = '꽝입니다!'
     else:
-        result = '꽝입니다!'
+        result = '번호의 수가 6개가 아닙니다.'
     return render_template('lotto_result.html', winner=winner, numbers=numbers, result=result)
