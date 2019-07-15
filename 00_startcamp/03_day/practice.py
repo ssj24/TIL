@@ -52,6 +52,7 @@
 #     k = k + 1
 
 
-#31차시
-for i in range(1,6):
-    print('*'*i.format({5:>5}))
+
+
+a = 9
+print(a+aa+aaa+aaaa)
