@@ -1,4 +1,4 @@
-print(int(3.5))
+# print(int(3.5))
 
 # a = 0.1 * 3
 # b = 0.3
@@ -41,3 +41,9 @@ print(int(3.5))
 # for i in a:
 #     my_str=my_str.replace(i, '')
 # print(my_str)
+
+class Plant(object):
+    type = 'tree'
+    kinds = [{'name': 'oak'}, {'name': 'maple'}]
+
+print('{p.type}: {p.kinds[0][name]}'.format(p=Plant()))
