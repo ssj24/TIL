@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>02_index</title>
+</head>
+
+<body>
+  <!-- Heading -->
+  <h1>h1</h1>
+  <h2>h2</h2>
+  <h3>h3</h3>
+  <h4>h4</h4>
+  <h5>h5</h5>
+  <h6>h6</h6>
+
+  <!-- Bold -->
+  <div>
+    <b>boldtiiiiime</b><br>
+    <strong>I AM STRONG(semantic. 이건 강조한다는 뜻. bold는 강조하는 거 아님)</strong>
+  </div>
+
+  <!-- Italic -->
+  <div>
+    <i>italic</i>
+    <em>em(semantic.)</em>
+  </div>
+  <!-- highlighted -->
+  <h2>Mark<mark>yellow</mark></h2>
+
+  <!-- del / ins -->
+  <h2><del>del</del></h2>
+  <h2><ins>ins</ins></h2>
+
+  <!-- sub/sup -->
+  <h2>it is<sub>sub</sub></h2>
+  <h2>it is<sup>sup</sup></h2>
+  
+  <!-- p / br -->
+  <p>This is p tag.<br>This is p tag.
+    This is p tag.<br>This is p tag.
+    This is p tag.<br>This is p tag.
+    This is p tag.<br>This is p tag.</p>
+  <pre>
+    from flask import Flask
+    app = Flask(__name__)
+
+    @app.route('/')
+    def hello('/'):
+      return 'Hello World'
+  </pre>
+
+  <!-- headline -->
+  <hr>
+
+  <!-- q/blockquote -->
+  <p>
+    Juno, said <q>Hi there!</q>
+  </p>
+  <blockquote>
+    To be or not To be. <br>
+    인용문 같은 거 쓸 때 들여쓰기
+  </blockquote>
+
+  <!-- ol/ul/li -->
+  <ol>
+    <li>사</li>
+    <li>과</li>
+    <li>파</li>
+    <li>이</li>
+  </ol>
+  <ul>
+    <li>오</li>
+    <li>리</li>
+    <li>지</li>
+    <li>널</li>
+  </ul>
+  
+</body>
+
+</html>
