@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>unit</title>
+  <link rel="stylesheet" href="01_unit.css">
+</head>
+
+<body>
+  <h1>단위를 알아봅시다</h1>
+  <p>Default font</p>
+  <ol>
+    <li>1.2rem</li>
+    <!-- 상위인 html 기준으로 1.2배 20px의 1.2배인 24px-->
+  </ol>
+  <ul>
+    <li>1.2em</li>
+    <!-- html은 20, 얘의 부모인 ul도 1.2배, 거기에 li니까 또 다시 1.2배 = 28.8px-->
+  </ul>
+
+  <!-- vw 창의 widthdml 1/100, vh 창의 height의 1/100-->
+  <span class="vw">10vw</span>
+  <span class="vh">10vh</span>
+  <div class="div-vw"></div>
+  <div class="div-vh"></div>
+
+  <!-- vmin: 1/100th of the smallest side -->
+  <div class="div-vmin"> 10vmin </div>
+</body>
+</html>

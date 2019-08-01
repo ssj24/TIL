@@ -1,0 +1,67 @@
+div {
+  color: white;
+  width: 100px;
+  height: 100px;
+  background-color: #ff0000;
+}
+
+.margin {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+/* 패딩을 하면 내부에서 늘어나는 늑힘? */
+.padding {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.border {
+  border-width: 5px;
+  border-style: dashed;
+  border-color: gray;
+  border-top-color: blue;
+  border-radius: 10px;
+}
+
+.margin-shorthand-1 {
+  margin: 10px;
+}
+.margin-shorthand-2 {
+  margin: 10px 20px;
+}
+
+.margin-shorthand-3 {
+  margin: 10px 20px 30px;
+}
+.margin-shorthand-4 {
+  margin: 10px 20px 30px 40px;
+}
+
+.align-center {
+  /* 오른쪽, 왼쪽에 반반 나눠준다 */
+  /* 상하는 0 좌우는 자동인 것 */
+  margin: 0 auto;
+}
+
+.align-right {
+  margin-left: auto;
+  /* 오른쪽의 너비를 왼쪽에 붙이는 느낌? */
+}
+
+.box-sizing {
+  margin: 20px;
+  padding: 20px;
+  border: 10px dotted gray;
+  width: 300px;
+}
+
+.content-box {
+  box-sizing: content-box;
+
+}
+
+.border-box {
+  box-sizing: border-box;
+}

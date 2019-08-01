@@ -1,0 +1,38 @@
+/* 전체 선택자는 * */
+* {
+  color: red;
+}
+
+/* 태그 선택자, 전체보다 태그가 우위 */
+h1 {
+  color: blue;
+}
+
+/* 클래스 선택자, 태그보다 우위 */
+
+.bold {
+  font-weight: bold;
+}
+
+.pink {
+  color: pink;
+}
+
+.yel {
+  color: yellow;
+}
+
+/* id 선택자, 클래스보다 우위*/
+#green {
+  color: green;
+}
+
+/* 이렇게 하나에 컬러 두 번 쓰면 맨 마지막에 선언된 컬러로 됨 원래는*/
+#orange {
+  color: rgb(95, 30, 30) !important;
+  color: orange;
+}
+
+#purple {
+  color: purple;
+}

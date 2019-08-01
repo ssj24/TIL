@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>display ad</title>
+  <link rel="stylesheet" href="06_display_ad.css">
+</head>
+<body>
+  <div>block</div>
+  <div>block</div>
+<!-- 인라인은 컨텐츠만큼 공간을 차지하는데 컨텐츠가 없으면 div가 있어도 보이지 않게 됨 -->
+<!-- 인라인은 width, height 적용 불가 -->
+  <div class="inline">인라인은</div>
+  <div class="inline">내용 영역이 필요해요!</div>
+<!-- inlin-block 
+block 속성으로 width, height  적용할 수 있지만
+inline 속성으로 우측 margin이 사라짐-->
+  <div class="inline-block">인블</div>
+  <div class="inline-block">인블</div>
+
+<!-- display:none;
+      visibility:hidden; -->
+  <div>div</div>
+  <div class="none">none</div>
+  <div class="hidden">hidden</div>
+  <div>div</div>
+  <!-- opaacity 투명도 -->
+  <div class="opacity">div</div>
+</body>
+</html>

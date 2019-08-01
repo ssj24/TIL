@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>selector</title>
+  <link rel="stylesheet" href="02_selector.css">
+</head>
+<body>
+  <p>red</p>
+  <h1>태그 선택자</h1>
+  <h1 class="pink">클래스 선택자</h1>
+  <h1 class="pink" id="green">아이디 선택자</h1>
+
+  <!-- p태그 내부에서 다른 스타일 주고 싶을 때 스팬으로! -->
+  <!-- span과 div 태그는 모두 의미는 없지만, '마크업'을 해야 css를 적용시킬 수
+  있기 때문에 활용된다. 특정한 곳을 지정해야하고 따라서 선택자가 필요하게 되고 선택자를
+  잡기 위해서는 마크업이 필요한 것이다. -->
+  <p class="pink">핑크핑크, <span id="purple">초록초록</span>초록초록</p>
+
+  <!-- 클래스를 여러개 주려면 공백으로 구분 -->
+  <!-- 인라인에서는 pink가 마지막에 써졌지만  css코드상으로 yellow가 마지막에 선언되어서
+  yel이 적용되었다. -->
+  <p class="bold yel pink">나는 무슨 색일까?</p>
+
+  <p class="bold yel pink" id="orange" style="color: purple;">가장 강한 우선순위</p>
+</body>
+</html>

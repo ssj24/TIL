@@ -1,0 +1,40 @@
+.font-1 {
+  font-size: 30px;
+  font-style: italic;
+}
+.font-2 {
+  font-size: 2rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: ligter;
+}
+.font-3 {
+  font-size: 130%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+}
+.font-4 {
+  font-size: small;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+.font-5 {
+  /* font shorthand 단축어를 쓸 때 순서는 상관 없음 항상.*/
+  /* font: font-style font-weight line-height font-size(필수) font-family(필수) */
+  font: italic 2rem "Georgia";
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: crimson;
+  color: #fff;
+}
+
+.box > p {
+  font-family: 'Nanum Brush Script', cursive;
+  font-size: 3rem;
+  text-align: center;
+  /* 수평정렬 */
+  line-height: 200px;
+  /* 부모의 높이만큼 줌으로써 수직 정렬 */
+}

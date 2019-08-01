@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>selector_ad</title>
+  <link rel="stylesheet" href="03_selector_ad.css">
+</head>
+<body>
+  <!-- 그룹 선택자 -->
+  <p>그룹 선택자</p>
+  <h3>그룹 선택자</h3>
+  <p>그룹</p>
+  <p>그룹</p>
+
+  <!-- 인접 선택자:반드시 바로 붙어있어야 함 -->
+  <div class="red"></div>
+  <div class="blue"></div>
+  <div></div>
+
+  <!-- 자식 선택자 -->
+  <ol>
+    <li>자식</li>
+    <div>
+      <li>나는?</li>
+    </div>
+  </ol>
+  <ol id="chocolate">
+    <li>허쉬밀크</li>
+    <li>허쉬쿠앤크</li>
+    <li>허쉬다크</li>
+  </ol>
+
+  <!-- 자손 선택자 -->
+  <ul>
+    <div>
+      <li>나는</li>
+      <li>자식이 아니라</li>
+      <li>자손이여</li>
+    </div>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,21 @@
+div {
+  width: 100px;
+  height: 100px;
+  background-color: #ff2299;
+  color: white;
+  line-height: 100px;
+  text-align: center;
+}
+.ml-auto {
+  margin-left: auto;
+}
+/* margin-right: auto; 는 좌측정렬로 default */
+.mr-auto {
+  margin-right: auto;
+}
+.mx-auto {
+  margin:0 auto;
+}
+.red {
+  border: 1px solid red;
+}

@@ -1,0 +1,35 @@
+p,
+h3 {
+  color: grey;
+}
+
+div {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+}
+
+.red {
+  background-color: #f00;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.red + .blue + div {
+  background-color: gold;
+}
+/* 바로 아래. 즉 자식 선택자 */
+ol > li {
+  color: darkgreen;
+}
+/* 아이디가 chocolate인 ol의 자식 */
+ol#chocolate >li {
+  color: chocolate;
+
+}
+
+ul li {
+  color: silver;
+}
