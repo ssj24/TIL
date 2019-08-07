@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>float</title>
+  <link rel="stylesheet" href="10_float.css">
+</head>
+<body>
+  <!-- float는 해당 요소를 다음 요소 위에 떠 있게(부유하게) 한다. 여기서 떠 있다는(float) 요소가
+  기본 레이아웃 흐름에서 벗어나 요소의 모서리가 왼쪽이라 오른쪽으로 이동하는 것이다.
+  주의 사항
+  float를 사용할 때는 요소의 위치를 고정시켜버리는 position:absolute를 사용하면 안 됨. -->
+  <div>div</div>
+  <div class="float-left">float-left</div>
+  <!-- float는 원래 우리 쪽(모니터로?)으로 다가오는 것 평면이라 티가 안 날 뿐 -->
+  <div class="back">div</div>
+  <!-- 그래서 떠 있는 div 밑으로 div가 들어갈 수 있는 것 -->
+
+  <div class="float-left">1</div>
+  <div class="float-left">2</div>
+  <!-- 3번이 먼저 오른쪽으로 떴기 때문에 4번이 3번 옆으로 옴 -->
+  <div class="float-right">3</div>
+  <div class="float-right">4</div>
+  <div class="back clear">div</div>
+</body>
+</html>
