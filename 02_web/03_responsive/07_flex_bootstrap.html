@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>flex_bootstrap</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+
+    .header {
+      height: 100px;
+    }
+
+    .aside {
+      width: 300px;
+    }
+
+    footer {
+      height: 100px;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d-flex flex-column container-fluid vh-100">
+
+    <div class="d-flex justify-content-between bg-warning header align-items-center">
+      <div class="p-2">LOGO</div>
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Content</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
+    </div>
+    <div class="h-100 d-flex">
+      <div class="aside bg-danger flex-grow-1 p-2">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt, commodi sit? Tenetur corporis et unde sunt
+        excepturi exercitationem. Voluptatum fugiat suscipit voluptas, quasi quibusdam reiciendis! Qui itaque ipsam
+        corporis officiis.
+      </div>
+      <section class="h-100 d-flex bg-info flex-grow-1 flex-column">
+        <div class="flex-grow-1 p-2 article bg-dark text-light border-bottom border-danger">Lorem ipsum dolor sit amet consectetur adipisicing
+          elit. Blanditiis
+          impedit ducimus quidem
+          natus. Repellendus sint at, commodi magnam, dignissimos, vitae sunt quia repellat eos sapiente deserunt
+          distinctio dolores! Minus, excepturi.</div>
+        <div class="flex-grow-1 p-2 article bg-light border-bottom border-danger">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Blanditiis
+          impedit ducimus quidem
+          natus. Repellendus sint at, commodi magnam, dignissimos, vitae sunt quia repellat eos sapiente deserunt
+          distinctio dolores! Minus, excepturi.</div>
+        <div class="flex-grow-1 p-2 article bg-dark text-light">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Blanditiis
+          impedit ducimus quidem
+          natus. Repellendus sint at, commodi magnam, dignissimos, vitae sunt quia repellat eos sapiente deserunt
+          distinctio dolores! Minus, excepturi.</div>
+      </section>
+    </div>
+    <footer class="bg-secondary p-3 mt-auto">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, nisi.
+    </footer>
+
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

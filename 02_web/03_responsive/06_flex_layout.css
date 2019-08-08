@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+nav {
+  height: 100px;
+  background-color: deeppink;
+  /* 여기서 flex넣고 안 넣고의 차이 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer {
+  margin-top: auto;
+  /* 이렇게 밑으로 밀어버리는 건 block속성일 때는 안 됨 flex로 바꿔서 가능한 것 */
+  width: 100%;
+  height: 100px;
+  background-color: #999;
+}
+
+.items {
+  display: flex;
+
+}
+
+.items > li {
+  list-style-type: none;
+  margin: 0 20px;
+}
+
+.main {
+  display: flex;
+  /* 여기서 100%는 nav밑부터 footer위까지 */
+  height: 100%;
+}
+
+aside {
+  width: 300px;
+  height: 100%;
+  background-color: rgb(7, 48, 34); 
+}
+
+section {
+  display: flex;
+  background-color: rgb(23, 31, 46);
+  height: 100%;
+/* grow안 주면 안 뜸... */
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.article {
+  background-color: azure;
+  border: 1px solid black;
+  padding: 30px 10px;
+  flex-grow: 1;
+}
