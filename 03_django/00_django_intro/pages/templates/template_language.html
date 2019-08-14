@@ -1,0 +1,101 @@
+<h3>1. 반복문</h3>
+{% for menu in menus %}
+<p>{{ menu }}</p>
+{% endfor %}
+<!--반드시 닫아줘야합니다.-->
+<hr>
+<!-- forloop는 DTL for문 안에서 자동으로 생기는 객체-->
+{% for menu in menus %}
+<p>{{ forloop.counter }}{{ menu }}</p>
+{% endfor %}
+<hr>
+
+{% for user in empty_list %}
+<p>{{ user }}</p>
+{% empty %}
+<p>현재 가입된 유저가 없습니다.</p>
+{% endfor %}
+
+<hr>
+<hr>
+<h3>2. 조건문</h3>
+{% if '짜장면' in menus %}
+<p>짜장면에는 고춧가루지!</p>
+{% endif %}
+<hr>
+{% for menu in menus %}
+{{ forloop.counter }}번째 도는중...
+  {% if forloop.first %}
+  <p>짜장면 + 고춧가루</p>
+  <!-- 첫번째 출력값을 바꿔버린것. 처음과 마지막만 이렇게 바꿀 수 있음-->
+  {% else %}
+  <p>{{ menu }}</p>
+  {% endif %}
+{% endfor %}
+<hr>
+<hr>
+<!-- <=, >=, ==, !=, >, <, in, not in, is 모두 사용 가능-->
+<h3>3. length filter</h3>
+{% for message in messages %}
+  {% if message|length > 5 %}<!--조건은 | 뒤에-->
+  <p>{{ message }}, 글자가 너무 길어요.</p>
+  {% else %}
+  <p>{{ message }}, {{ message|length }}</p>
+  {% endif %}
+{% endfor %}
+<hr><hr>
+
+<!--이미 정의되어있는 변수 호출은 '{퍼센트 퍼센트}'를 사용한다.-->
+<h3>4. lorem ipsum</h3>
+{% lorem %}
+<hr>
+{% lorem 3 w %}
+<hr>
+{% lorem 4 w random %}
+<hr>
+{% lorem 2 p random%}
+<hr><hr>
+
+<h3>5.글자수 제한</h3>
+<p>{{ my_sentence|truncatewords:3 }}</p>
+<!-- ...까지 하나로 쳐서 글자는 2개만.. -->
+<p>{{ my_sentence|truncatechars:3 }}</p>
+<hr><hr>
+
+<h3>6. 글자 관련 필터</h3>
+<!--변수 아니니까 '' 안에 문자열-->
+<p>{{ 'abc'|length }} </p>
+<p>{{ 'abc'|lower }} </p>
+<p>{{ my_sentence|title }} </p>
+<!--capfirst는 맨 앞의 것만 대문자로-->
+<p>{{ 'abc def'|capfirst }} </p>
+<p>{{ menus|random }} </p>
+<hr><hr>
+
+<h3>7. 연산</h3>
+<!-- 공식적인 제공은 더하기만 -->
+<p>{{ 4|add:6 }} </p>
+<hr><hr>
+
+<h3>8. 날짜표현</h3>
+<p>{{ datetimenow }} </p>
+<!--내장이라서 {{가 아니라 %사용-->
+<p>{% now "DATETIME_FORMAT" %} </p>
+<p>{% now "SHORT_DATETIME_FORMAT" %} </p>
+<p>{% now "DATE_FORMAT" %} </p>
+<p>{% now "SHORT_DATE_FORMAT" %} </p>
+<hr>
+{% now "m월 d일 (D) h:i" %}<br>
+{% now "y년 M월 d일 (D) H:I" %}
+<hr>
+<!--  Y를 current_year로 바꾸겠다.-->
+{% now "Y" as current_year %}
+Copyright {{ current_year }}
+<hr>
+{{ datetimenow|date:"SHORT_DATE_FORMAT"}}
+<hr><hr>
+
+<h3>9. 기타</h3>
+<!--url로 만들어줌-->
+<p>{{ 'google.com'|urlize }} </p>
+<p>{{ 'naver.com'|urlize }} </p>
