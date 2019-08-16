@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+<!--장고가 templates까지는 읽기 때문에 바로 base.html한 것
+extends는 맨 위에 있어야 한다.-->
+{% block content %}
 <h3>1. 반복문</h3>
 {% for menu in menus %}
 <p>{{ menu }}</p>
@@ -99,3 +103,4 @@ Copyright {{ current_year }}
 <!--url로 만들어줌-->
 <p>{{ 'google.com'|urlize }} </p>
 <p>{{ 'naver.com'|urlize }} </p>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+<!--장고가 templates까지는 읽기 때문에 바로 base.html한 것
+extends는 맨 위에 있어야 한다.-->
+{% block content %}
+
+<form action="/pages/result/" method="GET">
+  <label for="word">영단어를 입력하세요.</label>
+  <input type="text" id="word" name="word">
+  <input type="submit" value="만들기">
+</form>
+
+{% endblock %}

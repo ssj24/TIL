@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+<!--장고가 templates까지는 읽기 때문에 바로 base.html한 것
+extends는 맨 위에 있어야 한다.-->
+{% block content %}
+
+{% if result %}
+<p>오늘은 광복절입니다.</p>
+<!--elif도 쓸 수 있음.-->
+{% else %}
+<p>오늘은 광복절이 아닙니다.</p>
+{% endif %}
+{% endblock %}
