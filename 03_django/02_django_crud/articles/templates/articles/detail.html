@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block base %}
+  <h1 class="text-center">DETAIL</h1>
+
+  <h2>{{ article.pk }} 번째 글</h2>
+  <h3>제목: {{ article.title }}</h3>
+  <h3>내용: {{ article.content }}</h3>
+  <br>작성 시간: {{ article.created_at }}
+  <br>수정 시간: {{ article.updated_at }}
+  <hr>
+  <a href="/articles/{{ article.pk }}/edit/">[EDIT]</a><br>
+  <a href="/articles/{{ article.pk }}/delete/">[DELETE]</a><br>
+  <a href="/articles/">[back]</a>
+{% endblock base %}
