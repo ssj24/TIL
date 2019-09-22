@@ -1,4 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
+
+
 {% block base %}
-  <h1 class="text-center">성공</h1>
-{% endblock base %}
+<img src="{% static 'images/firework.jpg' %}" alt="firework_jpg" width="800px">
+
+<h1 class="text-center">CREATE</h1> {% comment %} new가 create로 {% endcomment %}
+{% comment %} <form action="{% url 'articles:create' %}" method="POST"> {% endcomment %}
+  {% comment %} <form action="" method="POST">
+    어차피 액션이 본인에게 오니까 없애도 작동하는 것.
+    {% endcomment %}
+    <form method="POST" enctype="multipart/form-data">
+
+      {% csrf_token %}
+      <label for="title">TITLE</label>
+      <input type="text" name="title" id="title" required><br>
+      <label for="content">CONTENT</label>
+      <textarea name="content" id="content" cols="30" rows="5"></textarea>
+      <br>
+
+      <label for="image">IMAGE</label>
+      <input type="file" name="image" id="image" accept="image/*"><br>
+      <hr>
+      <input type="submit" value="submit">
+    </form>
+
+    {% endblock base %}

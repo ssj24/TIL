@@ -31,7 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #local apps(내부에서 순서는 괜찮음)
     'articles.apps.ArticlesConfig',
+    'jobs.apps.JobsConfig',
+    #third-party libraries
+    'imagekit',
+    #django apps
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -119,3 +125,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# 실제 파일이나 디렉토리가 아니고 URL로만 존재하는 단위
+
+# 개발 단계에서 사용하는 실제 정적 파일이 위치한 경로를 지정하는 설정
+# bootstrap, 외부 템플릿등을 저장하기 위해 경로를 만듦
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'crud', 'assets'),
+]
+
+#STATIC_URL 과 비슷한 역할을 한다.
+# 업로드된 파일(stored files)의 URL 주소를 만들어주는 역할
+# STATIC_URL과 값이 달라야 함.
+MEDIA_URL = '/media/'
+
+#STATICFILES_DIRS와 비슷한 역할을 한다 실제 파일이 업로드되면 어디에 저장될 지 정하는 실제 경로
+#STATICFILES_DIRS와 값이 달라야 함.
+#개발 단계에서 사용하는 경로이므로 실제 배포 단계에서는 다른 경로를 설정해야 한다.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block base %}
+<br>
+<h1 class="text-center">{{ person.past_job }} IS <br>
+{{ person.name }}'s <br>
+PAST JOB.<br>
+</h1>
+<hr>
+<img src="{{ image }}" alt="gif_img">
+<hr>
+<a href="{% url 'jobs:index' %}">Do it again!</a>
+{% endblock base %}
