@@ -1,0 +1,54 @@
+{% extends 'articles/base.html' %}
+{% block content %}
+<h1>DETAIL</h1>
+<hr>
+<p>{{ article.pk }} </p>
+<p>{{ article.title }} </p>
+<p>{{ article.content }} </p>
+<p>{{ article.created_at|date:"SHORT_DATE_FORMAT" }} </p>
+<p>{{ article.updated_at|date:"M, j, Y" }} </p>
+<!-- 댓글 작성 form -->
+<form action="{% url 'articles:comments_create' article.pk %}" method="POST">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Submit">
+</form>
+<hr>
+<p><b>{{ comments|length }}개의 댓글 </b></p>
+{% comment %} <p><b>{{ article.comment_set.all|length }}개의 댓글 </b></p><!-- 어쩔 수 없을 때만! comments가 넘어오지 않는 상황이라면! -->
+<p><b>{{ comments.count }}개의 댓글 </b></p> {% endcomment %}
+
+{% for comment in comments %}
+<li>
+&#x25CC;{{ forloop.revcounter }} || <!-- forloop.counter -->
+{{ comment.content }} || 
+{{ comment.updated_at }}
+
+<hr>
+
+<form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST" style="display: inline" onclick="return confirm('추억이 사라집니다')">
+  {% csrf_token %}
+  <input type="submit" value="delete">
+</form>
+<hr>
+
+{% empty %}
+  <p><b>댓글이 없습니다.</b></p>
+</li>
+{% endfor %}
+
+
+
+<hr>
+
+
+
+<a href="{% url 'articles:update' article.pk %}">[UPDATE]</a>
+<form action="{% url 'articles:delete' article.pk %}" method="POST">
+{% csrf_token %}
+<input type="submit" value="delete">
+</form>
+
+<a href="{% url 'articles:index' %}">[back]</a>
+
+{% endblock content %}

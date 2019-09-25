@@ -1,0 +1,13 @@
+{% extends 'articles/base.html' %}
+<!--앱에 있어서 articles/붙임-->
+{% block content %}
+<h1>Articles</h1>
+<a href="{% url 'articles:create' %}">[NEW]</a>
+{% for article in articles %}
+<p>{{ article.pk }} </p>
+<p>{{ article.title }} </p>
+<a href="{{ article.get_absolute_url }}">[DETAIL] </a>
+<!--get_absolute_url의 reverse는 문자열로 리턴되는 것 그래서 {%가 아니라{{-->
+<hr>
+{% endfor %}
+{% endblock content %}
