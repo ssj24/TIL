@@ -39,7 +39,13 @@ def create(request):
 
 def detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
-    context = {'article': article,}
+    comments = article.comment_set.all()
+    form = CommentForm()
+    context = {
+        'article': article,
+        'comments': comments,
+        'form': form,
+    }
     return render(request, 'articles/detail.html', context)
 # def detail(request, article_pk):
 #     try:
@@ -91,6 +97,9 @@ def comments_create(request, article_pk):
         form = CommentForm(request.POST) #들어오는 리퀘스트를 통째로 넣어버림
         if form.is_valid():
             # comment = form.save() #그냥 form을 사용할 때는 쓰지 않던 구문
+            new_form = form.save(commit=False)
+            new_form.article = article
+            new_form.save()
             return redirect(article)
     else:
         form = CommentForm()
@@ -99,6 +108,7 @@ def comments_create(request, article_pk):
     return render(request, 'articles/form.html', context)
 
 def comments_delete(request, article_pk, comment_pk):
+    article = Article.objects.get(pk=article_pk)
     comment = Comment.objects.get(pk=comment_pk)
     if request.method == 'POST':
         comment.delete()
