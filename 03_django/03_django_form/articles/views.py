@@ -1,6 +1,7 @@
 from IPython import embed
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.http import Http404
+from django.views.decorators.http import require_POST
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
 
@@ -39,12 +40,12 @@ def create(request):
 
 def detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
-    comments = article.comment_set.all()
-    form = CommentForm()
+    comments = article.comment_set.all()#comment_set의 comment는 모델명
+    comment_form = CommentForm()
     context = {
         'article': article,
         'comments': comments,
-        'form': form,
+        'comment_form': comment_form,
     }
     return render(request, 'articles/detail.html', context)
 # def detail(request, article_pk):
@@ -55,15 +56,12 @@ def detail(request, article_pk):
 #     context = {'article': article,}
 #     return render(request, 'articles/detail.html', context)
 
-
+@require_POST
 def delete(request, article_pk):
-
     article = get_object_or_404(Article, pk=article_pk)
-    if request.method == 'POST':
-        article.delete()
-        return redirect('articles:index')
-    else:
-        return redirect(article)
+    article.delete()
+    return redirect('articles:index')
+    
 
     
 def update(request, article_pk):
@@ -91,26 +89,41 @@ def update(request, article_pk):
     return render(request, 'articles/form.html', context)
 
 
-def comments_create(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
-    if request.method == 'POST':
-        form = CommentForm(request.POST) #들어오는 리퀘스트를 통째로 넣어버림
-        if form.is_valid():
-            # comment = form.save() #그냥 form을 사용할 때는 쓰지 않던 구문
-            new_form = form.save(commit=False)
-            new_form.article = article
-            new_form.save()
-            return redirect(article)
-    else:
-        form = CommentForm()
+# def comments_create(request, article_pk):
+#     article = Article.objects.get(pk=article_pk)
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST) #들어오는 리퀘스트를 통째로 넣어버림
+#         if form.is_valid():
+#             # comment = form.save() #그냥 form을 사용할 때는 쓰지 않던 구문
+#             new_form = form.save(commit=False)
+#             new_form.article = article
+#             new_form.save()
+#             return redirect(article)
+#     else:
+#         form = CommentForm()
     
-    context = {'form': form,}
-    return render(request, 'articles/form.html', context)
+#     context = {'form': form,}
+#     return render(request, 'articles/form.html', context)
 
+# 선생님은...
+@require_POST
+def comments_create(request, article_pk):
+    # if request.method == 'POST'
+    comment_form = CommentForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False) #객체를 create하지만, db에 레코드는 작성하지 않는다. save하지 않은 것 모델 속성 바꿀 게 있으면 써 넣으라고
+        comment.article_id = article_pk
+        comment.save()
+    return redirect('articles:detail', article_pk)
+
+
+
+@require_POST
 def comments_delete(request, article_pk, comment_pk):
     article = Article.objects.get(pk=article_pk)
-    comment = Comment.objects.get(pk=comment_pk)
-    if request.method == 'POST':
-        comment.delete()
+    
+    # if request.method == 'POST':
+    comment = get_object_or_404(Comment, pk = comment_pk)
+    comment.delete()
     return redirect(article)
     

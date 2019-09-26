@@ -11,7 +11,15 @@ class ArticleAdmin(admin.ModelAdmin):
 admin.site.register(Article, ArticleAdmin)
 
 
+# class CommentAdmin(admin.ModelAdmin):
+#     list_display = ('pk', 'content', 'created_at', 'updated_at', 'article_id', )
+
+# admin.site.register(Comment, CommentAdmin)
+
+
+#위에 거와 밑에 거가 똑같음. 데코레이터 이용
+@admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('pk', 'content', 'created_at', 'updated_at', 'article_id', )
 
-admin.site.register(Comment, CommentAdmin)
+    

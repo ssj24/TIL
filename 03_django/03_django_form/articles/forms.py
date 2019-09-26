@@ -64,5 +64,5 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ('content',)
+        fields = ('content',) # fields = '__all__' 이렇게 하면 아티클을 선택할 수 있게 나옴
     
