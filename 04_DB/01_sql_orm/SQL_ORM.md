@@ -144,14 +144,11 @@ TIL
       1204
       1205     def clean_fields(self, exclude=None):
    
-   ValidationError: {'balance': ['이 필드는 null 값을 사
-   용할 수 없습니다. ']}
+   ValidationError: {'balance': ['이 필드는 null 값을 사용할 수 없습니다. ']}
    
    --------------------------------------------------------------------
    
-   In [5]: user = User(id=101, first_name='수지', last_
-      ...: name='조', age=28, country='한국', phone='12
-      ...: 3-456-7890', balance=1000000)
+   In [5]: user = User(id=101, first_name='수지', last_name='조', age=28, country='한국', phone='123-456-7890', balance=1000000)
    
    In [6]: user.full_clean()
    -----------------------------------------------------
@@ -166,35 +163,32 @@ TIL
       1204
       1205     def clean_fields(self, exclude=None):
    
-   ValidationError: {'id': ['User의 ID은/는 이미 존재합
-   니다.']}
+   ValidationError: {'id': ['User의 ID은/는 이미 존재합니다.']}
    
    --------sql에서 101을 미리 생성했기 때문.
                             
                             
-   In [7]: user = User(id=102, first_name='수지', last_
-      ...: name='조', age=28, country='한국', phone='12
-      ...: 3-456-7890', balance=1000000)
+   In [7]: user = User(id=102, first_name='수지', last_name='조', age=28, country='한국', phone='123-456-7890', balance=1000000)
    
    In [8]: user.full_clean()
    
    In [9]: user.save() 
    ```
-
+   
    ```sql
    -- sql
    sqlite> INSERT INTO users_user VALUES(101, '수지', 28, '한국', '123-456-7890');
    Error: table users_user has 7 columns but 5 values were supplied
    
-   --------------------------------------------------------------------
+--------------------------------------------------------------------
    
    sqlite> INSERT INTO users_user VALUES(101,'수지', '조', 28, '한국', '123-456-7890',
     1000000);
    
    ```
-
+   
    * 하나의 레코드를 빼고 작성 후 `NOT NULL` constraint 오류를 orm과 sql에서 모두 확인 해보세요.
-
+   
 3. 해당 user 레코드 조회
 
    - `101` 번 id의 전체 레코드 조회
@@ -229,10 +223,12 @@ TIL
 
       ```sql
    -- sql
-   sqlite> UPDATE users_user SET first_name='철수';
+   sqlite> UPDATE users_user SET first_name='철수' WHERE id=101;
    sqlite> SELECT * FROM users_user WHERE id=101;
    id,first_name,last_name,age,country,phone,balance
    101,"철수","김",28,"한국",123-456-7890,1000000
+   --처음에 이걸 설정할 때 UPDATE users_user SET first_name='철수'; 이렇게만 했더니
+   -- 해당 테이블 전체의 이름이 철수로 바뀜.....
       ```
 
 5. 해당 user 레코드 삭제
@@ -247,6 +243,10 @@ TIL
    In [16]: user.delete()
    Out[16]: (1, {'users.User': 1})
    ```
+   
+   저 두 문장을 하나로 할 수도 있음
+   
+   User.objects.get(pk=101).delete()
    
    ```sql
    -- sql
@@ -273,6 +273,12 @@ TIL
    Out[20]: 101
    ```
 
+   User.objects.all().count()
+
+   len(User.objects.all())도 가능!
+
+   다만 이건 권장되지 않음.
+
    ```sql
    -- sql
    sqlite> SELECT COUNT(*) FROM users_user;
@@ -290,6 +296,10 @@ TIL
    # orm
    In [21]: User.objects.filter(age=30).values('first_name')
    Out[21]: <QuerySet [{'first_name': '철수'}, {'first_name': '철수'}, {'first_name': '철수'}]>
+   
+   print(User.objects.filter(age=30).values('first_name').query)
+   # 쿼리로 어떻게 넘어가는지 보여줌
+   --> SELECT "users_user"."first_name" FROM "users_user" WHERE "users_user"."age" = 30
    ```
 
       ```sql
@@ -340,6 +350,8 @@ TIL
    In [25]: User.objects.filter(age=30, last_name='김').count()
    Out[25]: 1
    ```
+
+   User.objects.filter(age=30).filter(last_name='김').count()를 짧게 쓰는 것.
 
       ```sql
    -- sql
@@ -414,6 +426,9 @@ TIL
    In [7]: User.objects.filter(country='강원도', last_name='황').values('first_name')
 Out[7]: <QuerySet [{'first_name': '철수'}]>
    # values의 괄호 안에서는 ''를 써줘야한다.
+   
+   User.objects.filter(country='강원도', last_name='황').values('first_name').first().get('first_name')
+   # 을 하면 '철수'만 나온다. 쿼리셋의 모양을 잘 볼 것.
    ```
    
       ```sql
@@ -499,6 +514,10 @@ Out[10]: <QuerySet [<User: User object (99)>, <User: User object (48)>, <User: U
    60,"철수","김",30,"경상북도",02-5110-2334,350
    ```
    
+   SELECT * FROM users_user ORDER BY balance, age DESC LIMIT 10;
+   
+   ASC는 기본이니깐 그냥 안 써도 됨.
+   
 4. 성, 이름 내림차순 순으로 5번째 있는 사람
 
    ```python
@@ -527,6 +546,7 @@ Out[11]: <User: User object (67)>
 >
 > - '종합', '합계' 등의 사전적 의미
 > - 특정 필드 전체의 합, 평균 등을 계산할 때 사용
+> - cf) annotate: 임시적인 새로운 값의 컬럼을 붙여서 씀. 실제 DB에 추가하는 것은 아님.
 
 1. 전체 평균 나이
 
@@ -538,6 +558,10 @@ Out[11]: <User: User object (67)>
    Out[13]: {'age__avg': 28.22772277227723}
    ```
 
+   User.objects.aggregate(Avg('age'))
+
+   + 새로운 필드의 이름을 정하고 User.objects.aggregate(정하고 싶은 이름=Avg('age'))
+
       ```sql
    -- sql
    sqlite> SELECT AVG(age) FROM users_user;
@@ -548,17 +572,16 @@ Out[11]: <User: User object (67)>
 
    ```python
    # orm
-   In [14]: User.objects.filter(last_name='김').aggregate
-       ...: (Avg('age'))
+   In [14]: User.objects.filter(last_name='김').aggregate(Avg('age'))
    Out[14]: {'age__avg': 28.782608695652176}
    ```
-
-      ```sql
+   
+   ```sql
    -- sql
    sqlite> SELECT AVG(age) FROM users_user WHERE last_name='김';
    28.7826086956522
       ```
-
+   
 3. 강원도에 사는 사람의 평균 계좌 잔고
 
    ```python
