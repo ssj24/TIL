@@ -1,4 +1,4 @@
-from IPython import embed
+from IPython import embed.0212
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.http import Http404
 from django.views.decorators.http import require_POST
@@ -126,4 +126,5 @@ def comments_delete(request, article_pk, comment_pk):
     comment = get_object_or_404(Comment, pk = comment_pk)
     comment.delete()
     return redirect(article)
-    
+    tlswkjdkdmdm 
+
