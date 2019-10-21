@@ -1,18 +1,33 @@
-from IPython import embed.0212
+from IPython import embed
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.views.decorators.http import require_POST
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
 
 # Create your views here.
 def index(request):
+    # embed()
+    #session에 visits_num키로 접근해 값을 가져온다
+    # 기본적으로 존재하지 않는 키이기 때문에 키가 없다면(방문한 적이 없다면) 0값을 가져오도록 한다
+    # .get으로 가져올 때 값이 없으면 NULL인데 0으로 가져오겠다는 것.
+    visits_num = request.session.get('visits_num', 0) # 값이 없다면 0
+    # 그리고 가져온 값을 session에 visits_num에 매번 1씩 증가한 값으로 할당한다.(유저의 다음 방문을 위해)
+    request.session['visits_num'] = visits_num + 1
+    # session data안에 있는 새로운 정보를 수정했다면 django는 수정한 사실을 알아채지 못하기 때문에 다음과 같이 설정
+    request.session.modified = True
+    # 아니면 settings.py에 SESSION_SAVE_EVERY_REQUEST = True를 하면 모든 곳에서 이렇게 바뀜
+    # embed()
     articles = Article.objects.all()
     # articles = get_list_or_404(Article) #이건 글이 하나도 없으면 404에러가 떠서 여기에 쓰기에는 부적절. 
-    context = {'articles': articles,}
+    context = {
+        'articles': articles,
+        'visits_num': visits_num,
+    }
     return render(request, 'articles/index.html', context)
 
-
+@login_required
 def create(request):
     # embed()
     if request.method == 'POST':
@@ -56,14 +71,16 @@ def detail(request, article_pk):
 #     context = {'article': article,}
 #     return render(request, 'articles/detail.html', context)
 
+
 @require_POST
 def delete(request, article_pk):
-    article = get_object_or_404(Article, pk=article_pk)
-    article.delete()
+    if request.user.is_authenticated:
+        article = get_object_or_404(Article, pk=article_pk)
+        article.delete()
     return redirect('articles:index')
     
 
-    
+@login_required   
 def update(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     if request.method == 'POST':
@@ -106,25 +123,29 @@ def update(request, article_pk):
 #     return render(request, 'articles/form.html', context)
 
 # 선생님은...
+
 @require_POST
 def comments_create(request, article_pk):
-    # if request.method == 'POST'
-    comment_form = CommentForm(request.POST)
-    if comment_form.is_valid():
-        comment = comment_form.save(commit=False) #객체를 create하지만, db에 레코드는 작성하지 않는다. save하지 않은 것 모델 속성 바꿀 게 있으면 써 넣으라고
-        comment.article_id = article_pk
-        comment.save()
+    if request.user.is_authenticated:
+
+        # if request.method == 'POST'
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False) #객체를 create하지만, db에 레코드는 작성하지 않는다. save하지 않은 것 모델 속성 바꿀 게 있으면 써 넣으라고
+            comment.article_id = article_pk
+            comment.save()
     return redirect('articles:detail', article_pk)
 
 
 
 @require_POST
 def comments_delete(request, article_pk, comment_pk):
-    article = Article.objects.get(pk=article_pk)
     
-    # if request.method == 'POST':
-    comment = get_object_or_404(Comment, pk = comment_pk)
-    comment.delete()
-    return redirect(article)
-    tlswkjdkdmdm 
+    if request.user.is_authenticated:
+        article = Article.objects.get(pk=article_pk)
+        # if request.method == 'POST':
+        comment = get_object_or_404(Comment, pk = comment_pk)
+        comment.delete()
+        return redirect(article)
+    return HttpResponse('You are Unauthorized', status=401)
 
