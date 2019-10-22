@@ -50,8 +50,8 @@ class ArticleForm(forms.ModelForm): # 모델스에서 textfield여서 얘는 위
     )
     class Meta:#modelform은 class meta가 필수
         model = Article
-        # fields = ('title', 'content', )
-        fields = '__all__' #all이 아니라 하나씩 쓸 거면 리스트나 튜플로 감싼다
+        fields = ('title', 'content', )
+        # fields = '__all__' #all이 아니라 하나씩 쓸 거면 리스트나 튜플로 감싼다
         # exclude = ('title')# fields 안 쓰고 이것만 씀. title외의 모든 것은 다 나오게
         # widgets은 아래와 같이 쓰지 말고 메타 위에 widget으로 쓰는 것을 권장
         # widgets = {
@@ -61,7 +61,17 @@ class ArticleForm(forms.ModelForm): # 모델스에서 textfield여서 얘는 위
         # }
 
 class CommentForm(forms.ModelForm):
-
+    content = forms.CharField(
+        label='comment',
+        widget=forms.Textarea(
+            attrs={
+                'class': 'my-content',
+                'placeholder': 'Enter the content',
+                'rows': 1,
+                'cols': 50,
+            }
+        )
+    )
     class Meta:
         model = Comment
         fields = ('content',) # fields = '__all__' 이렇게 하면 아티클을 선택할 수 있게 나옴

@@ -1,20 +1,16 @@
 {% extends 'articles/base.html' %}
 <!--앱에 있어서 articles/붙임-->
 {% block content %}
-<h1>Articles</h1>
-<p><b>당신의 방문 횟수: {{ visits_num }} {% if visits_num == 0 or visits_num == 1 %} time {% else %} times {% endif %}  </b> </p>
-<!-- request는 기본적으로 안 보내줘도 다 쓸 수 있음. -->
-{% if user.is_authenticated %}
+  <h1>Articles</h1>
+  <p><b>당신의 방문 횟수: {{ visits_num }} {% if visits_num == 0 or visits_num == 1 %} time {% else %} times {% endif %}  </b> </p>
+  <!-- request는 기본적으로 안 보내줘도 다 쓸 수 있음. -->
+  {% if user.is_authenticated %}
 
-<a href="{% url 'articles:create' %}">[NEW]</a>
-{% else %}
-<a href="{% url 'accounts:login' %}">[새 글을 작성하려면 로그인하세요]</a>
-{% endif %}
-{% for article in articles %}
-<p>{{ article.pk }} </p>
-<p>{{ article.title }} </p>
-<a href="{{ article.get_absolute_url }}">[DETAIL] </a>
-<!--get_absolute_url의 reverse는 문자열로 리턴되는 것 그래서 {%가 아니라{{-->
-<hr>
-{% endfor %}
+    <a href="{% url 'articles:create' %}">[NEW]</a>
+  {% else %}
+    <a href="{% url 'accounts:login' %}">[새 글을 작성하려면 로그인하세요]</a>
+  {% endif %}
+  {% for article in articles %}
+    {% include 'articles/_article.html' %}
+  {% endfor %}
 {% endblock content %}

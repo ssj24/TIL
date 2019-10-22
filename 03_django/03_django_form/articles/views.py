@@ -1,3 +1,4 @@
+import hashlib
 from IPython import embed
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
@@ -7,7 +8,11 @@ from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
 
 # Create your views here.
-def index(request):
+def index(request) :
+    # if request.user.is_authenticated:
+    #     gravatar_url = hashlib.md5(request.user.email.encode('utf-8').lower().strip()).hexdigest()
+    # else:
+    #     gravatar_url = None
     # embed()
     #session에 visits_num키로 접근해 값을 가져온다
     # 기본적으로 존재하지 않는 키이기 때문에 키가 없다면(방문한 적이 없다면) 0값을 가져오도록 한다
@@ -24,6 +29,7 @@ def index(request):
     context = {
         'articles': articles,
         'visits_num': visits_num,
+        # 'gravatar_url': gravatar_url,
     }
     return render(request, 'articles/index.html', context)
 
@@ -41,7 +47,10 @@ def create(request):
             # title = form.cleaned_data.get('title') #cleaned 유효성을 통과한 정제된 데이터
             # content = form.cleaned_data.get('content') #cleaned 유효성을 통과한 정제된 데이터
             # article = Article.objects.create(title=title, content = content)
-            article = form.save() #그냥 form을 사용할 때는 쓰지 않던 구문
+            # article = form.save() #그냥 form을 사용할 때는 쓰지 않던 구문
+            article = form.save(commit=False) #객체를 create하지만, db에 레코드는 작성하지 않는다. save하지 않은 것 모델 속성 바꿀 게 있으면 써 넣으라고
+            article.user = request.user
+            article.save()
             return redirect(article)
     else:
         form = ArticleForm()
@@ -76,30 +85,37 @@ def detail(request, article_pk):
 def delete(request, article_pk):
     if request.user.is_authenticated:
         article = get_object_or_404(Article, pk=article_pk)
-        article.delete()
+        if request.user == article.user:
+            article.delete()
+        else:
+            return redirect(article)
     return redirect('articles:index')
     
 
 @login_required   
 def update(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
-    if request.method == 'POST':
-        form = ArticleForm(request.POST, instance=article)
-        #수정된 객체와 기존 객체 두 개 모두 불러오는 것
-        #그냥 폼은 initial인 게 모델폼은 instance
-        if form.is_valid():
-            # article.title = form.cleaned_data.get('title')
-            # article.content = form.cleaned_data.get('content')
-            # article.save()
-            article = form.save()
-            return redirect(article)
+    if request.user == article.user:
+        if request.method == 'POST':
+            form = ArticleForm(request.POST, instance=article)
+            #수정된 객체와 기존 객체 두 개 모두 불러오는 것
+            #그냥 폼은 initial인 게 모델폼은 instance
+            if form.is_valid():
+                # article.title = form.cleaned_data.get('title')
+                # article.content = form.cleaned_data.get('content')
+                # article.save()
+                
+                article = form.save()
+                return redirect(article)
+        else:
+            # embed()
+            # ArticleForm을 초기화(이전에 DB에 저장된 데이터를 넣어준 상태)
+            # __dict__ : article 객체 데이터를 딕셔너리 자료형으로 변환
+            # form = ArticleForm(initial = article.__dict__)
+            # form = ArticleForm(initial={'title': article.title, 'content': article.content})
+            form = ArticleForm(instance=article)
     else:
-        # embed()
-        # ArticleForm을 초기화(이전에 DB에 저장된 데이터를 넣어준 상태)
-        # __dict__ : article 객체 데이터를 딕셔너리 자료형으로 변환
-        # form = ArticleForm(initial = article.__dict__)
-        # form = ArticleForm(initial={'title': article.title, 'content': article.content})
-        form = ArticleForm(instance=article)
+        return redirect('articles:index')
     # 1. POST방식일 때 여기 넘어오는 form은 검증에 실패한 form으로 오류 메세지도 포함된 상태
     # 2. GET방식일 때는 초기화된 form
     context = {'form': form, 'article': article,}
@@ -127,12 +143,12 @@ def update(request, article_pk):
 @require_POST
 def comments_create(request, article_pk):
     if request.user.is_authenticated:
-
         # if request.method == 'POST'
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False) #객체를 create하지만, db에 레코드는 작성하지 않는다. save하지 않은 것 모델 속성 바꿀 게 있으면 써 넣으라고
             comment.article_id = article_pk
+            comment.user = request.user
             comment.save()
     return redirect('articles:detail', article_pk)
 
@@ -145,7 +161,21 @@ def comments_delete(request, article_pk, comment_pk):
         article = Article.objects.get(pk=article_pk)
         # if request.method == 'POST':
         comment = get_object_or_404(Comment, pk = comment_pk)
-        comment.delete()
+        if request.user == comment.user:
+            comment.delete()
         return redirect(article)
     return HttpResponse('You are Unauthorized', status=401)
 
+
+def like(request, article_pk):
+    article = get_object_or_404(Article, pk=article_pk)
+    user = request.user
+
+    # 해당 게시글에 좋아요를 누른 사람들 중에서 현재 접속 유저가 있다면 좋아요를 취소
+    if article.like_users.filter(pk=user.pk).exists():
+    #.get은 없으면 오류 뜨니까
+    # if request.user in article.like_users.all():
+        article.like_users.remove(user) # 좋아요 취소
+    else:
+        article.like_users.add(user) # 좋아요
+    return redirect('articles:index')

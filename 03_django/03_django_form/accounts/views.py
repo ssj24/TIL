@@ -8,14 +8,14 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import login as auth_login
 # from django.contrib.auth import login as auth_login, logout as auth_logout 이렇게 이어서 쓸 수도 있음
 from django.contrib.auth import logout as auth_logout
-from .forms import CustomUserChangeForm
+from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 # Create your views here.
 def signup(request):
     if request.user.is_authenticated:
         return redirect('articles:index')
     if request.method == 'POST': #유저 만들기
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         # embed()
         if form.is_valid():
             user = form.save()
@@ -23,7 +23,7 @@ def signup(request):
             # form.save()
             return redirect('articles:index')
     else:
-        form = UserCreationForm # post가 아니면 폼을 띄움
+        form = CustomUserCreationForm # post가 아니면 폼을 띄움
     context = {'form': form}
     return render(request, 'accounts/auth_form.html', context)
 
