@@ -11,5 +11,6 @@ urlpatterns = [
     path('<int:article_pk>/comments/', views.comments_create, name='comments_create'), # DETAIL(GET) + CREATE(POST)
     path('<int:article_pk>/comments/<int:comment_pk>/', views.comments_delete, name='comments_delete'), #url을 통해서 요청을 받으니까 url에 필요한 인자가 다 나와있어야 한다.
     path('<int:article_pk>/like/', views.like, name='like'),
+    path('<int:article_pk>/follow/<int:user_pk>/', views.follow, name='follow'),
     
 ]

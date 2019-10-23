@@ -55,6 +55,8 @@
     <input type="submit" value="delete" class="btn btn-outline-danger">
   </form>
 {% endif %}
-
-  <a href="{% url 'articles:index' %}">[back]</a>
+<hr>
+{% include 'articles/_follow.html' %}
+<hr>
+<a href="{% url 'articles:index' %}">[back]</a>
 {% endblock content %}

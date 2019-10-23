@@ -1,0 +1,43 @@
+{% extends 'articles/base.html' %}
+{% block content %}
+  <h1 class="text-center">{{ person.username }}'s 프로필입니다.</h1>
+  <hr>
+  <h3 class="text-center">{{ person }}이 작성한 글({{ articles|length }}) </h3>
+  {% with articles=articles %}
+    <div class="row">
+      {% for article in articles %}
+        <div class="col-4 my-2">
+          <div class="card">
+            <h5 class="card-header">{{article.title}} </h5>
+            <div class="card-body">
+              <h5 class="card-title">{{ article.content }} </h5>
+              <p class="card-text"><i class="fab fa-gratipay fa-lg" style="color: crimson;"></i>{{ article.like_users.all|length }}명이 좋아하는 글</p>
+              <p class="card-text">{{ article.comment_set.count }}개의 댓글</p>
+              <a href="{% url 'articles:detail' article.pk %}" class="btn btn-outline-success float-right">게시글 보기</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endwith %}
+
+  <hr><hr>
+  <h3 class="text-center">{{ person }}이 작성한 댓글({{ comments|length }}) </h3>
+  <div class="row">
+    {% for comment in comments %}
+      <div class="col-12 my-2">
+        <div class="card mb-3">
+          <div class="card-header">
+            {{ comment.article.title }}
+          </div>
+          <div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p>{{ comment.content }} </p>
+              <footer class="blockquote-footer">{{ comment.created_at }} </footer>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock content %}

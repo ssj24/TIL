@@ -7,6 +7,8 @@ class CustomUserChangeForm(UserChangeForm):
         model = get_user_model() #return User(which is active)
         fields = ('email', 'first_name', 'last_name',)
 
+
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
+        model = get_user_model()
         fields = UserCreationForm.Meta.fields + ('email', )

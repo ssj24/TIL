@@ -1,6 +1,6 @@
 <div class="card mb-3">
   <div class="card-header">
-    작성자: {{ article.user }}
+    작성자: <a class="card-link" href="{% url 'accounts:profile' article.user %}"> {{ article.user }} </a>
     <!--이게 실제로는 for문 안이라서 article사용 가능-->
   </div>
   <div class="card-body">

@@ -127,4 +127,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'accounts.User'
+#django는 맞춤 모델을 참조하는 AUTH_USER_MODEL 설정 값을 제공함으로써 기본 유저 모델을 오버라이드하도록 할 수 있다.
