@@ -34,6 +34,11 @@ INSTALLED_APPS = [
     'articles.apps.ArticlesConfig',
     'accounts.apps.AccountsConfig',
     'bootstrap4',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,6 +76,12 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 WSGI_APPLICATION = 'myform.wsgi.application'
 
@@ -129,3 +142,5 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'accounts.User'
 #django는 맞춤 모델을 참조하는 AUTH_USER_MODEL 설정 값을 제공함으로써 기본 유저 모델을 오버라이드하도록 할 수 있다.
+
+LOGIN_REDIRECT_URL = 'articles:index'

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.http import Http404, HttpResponse
 from django.views.decorators.http import require_POST
-from .models import Article, Comment
+from .models import Article, Comment, Hashtag
 from .forms import ArticleForm, CommentForm
 
 # Create your views here.
@@ -52,6 +52,14 @@ def create(request):
             article = form.save(commit=False) #객체를 create하지만, db에 레코드는 작성하지 않는다. save하지 않은 것 모델 속성 바꿀 게 있으면 써 넣으라고
             article.user = request.user
             article.save()
+
+            #hashtag
+            for word in article.content.split(): #content를 공백 기준으로 리스트화
+                if word.startswith('#'):
+                    hashtag, created = Hashtag.objects.get_or_create(content=word) 
+                    # word랑 같은 hashtag를 찾는데 있으면 기존 객체를(.get) 가져오고 없으면 새로운 객체를 생성한다.
+                    article.hashtags.add(hashtag) # created를 사용하지 않았다면 hashtag[0]로 작성
+
             return redirect(article)
     else:
         form = ArticleForm()
@@ -109,6 +117,15 @@ def update(request, article_pk):
                 # article.save()
                 
                 article = form.save()
+
+                #hashtag update
+                article.hashtags.clear() #해당 아티클의 hash태그 전체 삭제
+                for word in article.content.split(): #content를 공백 기준으로 리스트화
+                    if word.startswith('#'):
+                        hashtag, created = Hashtag.objects.get_or_create(content=word) 
+                        # word랑 같은 hashtag를 찾는데 있으면 기존 객체를(.get) 가져오고 없으면 새로운 객체를 생성한다.
+                        article.hashtags.add(hashtag)
+
                 return redirect(article)
         else:
             # embed()
@@ -194,3 +211,13 @@ def follow(request, article_pk, user_pk):
         else:
             person.followers.add(user)
     return redirect('articles:detail', article_pk)
+
+def hashtag(request, hash_pk):
+    hashtag = get_object_or_404(Hashtag, pk=hash_pk)
+    articles = hashtag.article_set.order_by('-pk')
+    # related_name이 없어서 _set 씀
+    context = {
+        'hashtag': hashtag,
+        'articles': articles,
+    }
+    return render(request, 'articles/hashtag.html', context)
