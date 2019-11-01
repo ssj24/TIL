@@ -9,7 +9,7 @@ from .models import Music, Artist, Comment
 def music_list(request):
     musics = Music.objects.all()
     serializer = MusicSerializer(musics, many=True) # serializer는 musics라고 하는 queryset을 json타입으로 바꿔준다.
-    return Response(serializer.data)
+    return Response(serializer.data) # 사용자에게 보여지는 화면! 데이터 저장과는 무관하다.
 
 @api_view(['GET'])
 def music_detail(request, music_pk):
