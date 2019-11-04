@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>DNC</title>
+  <style>
+    img {
+      width: 300px;
+      height: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="animals">
+    <button v-on:click="getDogImage">DOGs only</button>
+    <button v-on:click="getCatImage">for CAT</button>
+    <button id="mul-button">catx10</button>
+    <hr>
+    <img v-for="image in images" v-bind:src="image" alt="animal" v-if="image"> <!-- image가 있을 때만 띄운다 -->
+  </div>
+  
+  
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const dog = function() {
+      const URL = 'https://dog.ceo/api/breeds/image/random'
+      axios.get(URL)
+        .then(response => { //여기서 그냥 function 쓰면 windows됨 함수 내 함수라서
+          // this.image = response.data.message // 같은 인스턴스 내부의 데이터 내의 속성 값은 this 키워드를 통해서 접근
+          this.images.push(response.data.message)
+        })
+    }
+    const app = new Vue({
+      el: '#animals',
+      data: {
+        // image: '', // 요청받은 데이터를 넣어야 하기 때문에 빈 문자열로 둠
+        images: []
+      },
+      methods: {
+        getDogImage: dog, // 이렇게 밖으로 빼도 됨
+        getCatImage: function() {
+          const URL = 'https://api.thecatapi.com/v1/images/search'
+          axios.get(URL)
+            .then(response => {
+              // this.image = response.data[0].url
+              this.images.push(response.data[0].url)
+            })
+        }
+      }
+    })
+
+    const repetition = function() {
+      for (let i=0; i<10; i++) {
+        app.getCatImage()
+      }
+    }
+
+    const mulButton = document.querySelector('#mul-button')
+    mulButton.addEventListener('click', repetition)
+  
+  </script>
+</body>
+
+</html>

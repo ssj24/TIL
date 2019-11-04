@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <img v-bind:src="vueImage" alt="todo-list" width="400px"> <!-- src 즉 데이터를 html상에 안 쓰고 js로..! -->
+    <li v-for="todo in todos" v-if="!todo.completed" v-on:click="check(todo)"> <!--for문의 인자 todo-->
+      {{ todo.content }}
+    </li>
+    <li v-else v-on:click="check(todo)">[완료!]</li>
+    
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        // todos: [
+        //   '점심 메뉴 고민', 
+        //   '사다리 타기',
+        //   '낮잠 자기',
+        //   '야자하기',
+        // ]
+        todos: [
+          {
+            content: '점심 메뉴 고민',
+            completed: true,
+          },
+          {
+            content: '사다리 타기',
+            completed: false,
+          },
+          {
+            content: '낮잠 자기',
+            completed: false,
+          },
+          {
+            content: '야자하기',
+            completed: false,
+          },
+        ],
+        vueImage: 'https://www.jotform.com/blog/wp-content/uploads/2018/08/to-do-list-compressor.jpg'
+      },
+      methods: {
+        check: function(list) {
+          list.completed = !list.completed
+        }
+      }
+    })
+  </script>
+</body>
+</html>

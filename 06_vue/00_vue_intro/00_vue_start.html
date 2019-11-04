@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    {{ message }} - {{ count }}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app', // view-viewModel binding
+      data: {
+        message: 'hello VUE!',
+        count: 0,
+        // test: this.message,// this는 해당 객체의 상위 객체(같은 인스턴스 내부)
+      },
+      methods: {
+        // 표현식
+        plus: function() {
+        //plus: () => { // arrow function은 최상위 객체(window)를 가르킨다. 그래서 얘는 카운트를 못 가르킴
+          this.count++ // Vue instance 내에서는 data 내의 값들에 this로 접근 가능
+        },
+        // 선언식
+        minus() {
+          this.count--
+        }
+      }
+    })
+
+    // app.message === app.$data.message // 후자가 더 정확합니다.
+    // app.$data
+  </script>
+</body>
+
+</html>

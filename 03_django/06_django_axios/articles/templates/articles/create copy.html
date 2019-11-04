@@ -1,0 +1,21 @@
+{% extends 'articles/base.html' %}
+{% block content %}
+<h1>CREATE</h1>
+<form action="" method="POST"> <!--액션에 값 안 넣으면 그냥 현재 주소로 포스트 방식으로 보냄. # 넣으면 안 됨-->
+{% csrf_token %}
+{{ form.as_p }} <!--라벨링도 알아서 되어 있음-->
+{% comment %} <!--1번 방법 -->
+{{ form.title.label_tag }}
+{{ form.title }}
+{{ form.content.lael_tag }}
+{{ form.content}} {% endcomment %}
+
+{% comment %} <!--2번 방법-->
+{% for field in form %}
+  {{ field.label_tag }}
+  {{ field }}
+{% endfor %} {% endcomment %}
+<input type="submit" value="CREATE">
+</form>
+
+{% endblock content %}
