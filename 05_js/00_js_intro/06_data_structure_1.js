@@ -37,17 +37,3 @@ console.log(numbers.join()) // 1, 2, 3, 4, a, a
 console.log(numbers.join('')) // 1234aa
 console.log(numbers.join('-')) // 1-2-3-4-a-a
 console.log(numbers) // join은 원본을 변화시키지는 않음
-
-
-
-
-
-
-
-
-
-
-
-
-
-
