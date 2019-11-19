@@ -17,10 +17,44 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
+    function shuffle(arra1) {
+      var ctr = arra1.length, temp, index;
+
+  // While there are elements in the array
+      while (ctr > 0) {
+  // Pick a random index
+          index = Math.floor(Math.random() * ctr);
+  // Decrease ctr by 1
+          ctr--;
+  // And swap the last element with it
+          temp = arra1[ctr];
+          arra1[ctr] = arra1[index];
+          arra1[index] = temp;
+      }
+      return arra1;
+    }
+    function getRandom(arr, n) {
+      var result = new Array(n),
+          len = arr.length,
+          taken = new Array(len);
+      if (n > len)
+          throw new RangeError("getRandom: more elements taken than available");
+      while (n--) {
+          var x = Math.floor(Math.random() * len);
+          result[n] = arr[x in taken ? taken[x] : x];
+          taken[x] = --len in taken ? taken[len] : len;
+      }
+      return result;
+    }
     const Post = function() {
+      this.posts = []
       axios.get('https://jsonplaceholder.typicode.com/posts')
         .then(res => {
-          this.posts.push(res.data)
+          // const randomized = shuffle(res.data)
+          const randomized = getRandom(res.data, 4)
+          this.posts.push(randomized)
+          console.log(randomized)
+          console.log(this.posts)
         })
     }
     const app = new Vue({
